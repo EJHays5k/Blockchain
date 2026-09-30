@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include "user.h"
+#include <time.h>
 
 struct User* add(struct User * head, char* Username) {
 	Sleep((rand() % 10 + 1) * 1000);
