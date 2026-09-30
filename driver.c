@@ -13,13 +13,18 @@ int main(void) {
 	head = add(head, "Nick");
 
 	printLog(head);
+
 	verify(head); // Baseline
 	
 	//Tests 4 and 5: Link connection with previous node, and moddified entry
 	strcpy(head->next->Username, "Timothy");
 	verify(head); // Should fail
+	strcpy(head->next->Username, "Tim"); //Fix
 
-
+	// Test 6: 
+	head->next->hash.hash0 = head->next->hash.hash0 + 1; // Modify hash	
+	verify(head); // Should fail
+	head->next->hash.hash0 = head->next->hash.hash0 - 1; //Fix
 
 	/* 
 	head = add(head, "rob");
