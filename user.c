@@ -64,20 +64,20 @@ void printUser(struct User* user) {
 
 void generateDigest(struct Digest* digest, struct User* User) {
     unsigned char* result = SSHA((unsigned char*)User, STRUCT_SIZE);
-    digest->hash0 = result[5]; // Intentional error: Incorrect hash index
-    digest->hash1 = result[6];
-    digest->hash2 = result[7];
-    digest->hash3 = result[8];
-    digest->hash4 = result[9];
+    digest->hash0 = result[0]; 
+    digest->hash1 = result[1];
+    digest->hash2 = result[2];
+    digest->hash3 = result[3];
+    digest->hash4 = result[4];
 }
 void verify(struct User* curr) {
     int height = 2;
 
     printf("******** Verifying Log *********\n\n");
 
-    struct Block* prev = NULL;
+    struct User* prev = NULL;
     if (curr != NULL) {
-        prev = curr; // Intentional error: Incorrect next pointer
+       prev = curr->next; 
     }
 
     printf("User 1, impossible to verify\n");
@@ -90,9 +90,9 @@ void verify(struct User* curr) {
 
         if (prev != NULL) {
             struct Digest prev_digest_computed;
-            generateDigest(&prev_digest_computed, curr); // Intentional error: Incorrect block passed
+            generateDigest(&prev_digest_computed, prev); 
 
-            if (digest_equal(prev_digest_computed, curr->hash)) { // Intentional error: Incorrect comparison
+            if (digest_equal(prev_digest_computed, curr->hash)) { 
                 printf("User %d passed\n", height);
                 printf("\t%-20s", "User Data:");
                 printUser(curr);
@@ -114,7 +114,7 @@ void verify(struct User* curr) {
                 return;
             }
         }
-        curr = prev; // Intentional error: Incorrect node traversal
+        curr = prev; 
         prev = curr->next;
         height++;
     }
