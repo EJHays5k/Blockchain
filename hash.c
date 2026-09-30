@@ -7,7 +7,34 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
     C = 102;
     D = 67;
     E = 76;
+    
+    for (size_t i = 0; i < length; i++) {
+        unsigned char shr2 = B >> 2;
+        unsigned char shr1 = B >> 1;
+        unsigned char choice = (unsigned char)((B & C) | (D & C));
 
+        unsigned char newA = E;
+        unsigned char newB = A;
+        unsigned char newC = (unsigned char)(shr2 + E);
+        unsigned char newD = (unsigned char)(shr2 ^ shr1);
+        unsigned char newE = (unsigned char)(shr1 + choice + msg[i]);
+
+        A = newA;
+        B = newB;
+        C = newC;
+        D = newD;
+        E = newE;
+        unsigned char* digest = (unsigned char*)malloc(DIGEST_SIZE * sizeof(unsigned char));
+        digest[0] = A;
+        digest[1] = B;
+        digest[2] = C;
+        digest[3] = D;
+        digest[4] = E;
+        return digest;
+    }
+}
+
+    /*
     for (int i = 0; i < length; i++) {
         for (int round = 0; round < 8; round++) {
             unsigned char g = (B & C) | (C & D);
@@ -25,6 +52,9 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
         }
       
     }
+    
+    
+
     unsigned char* digest = (unsigned char*)malloc(DIGEST_SIZE * sizeof(unsigned char));
     digest[0] = A;
     digest[1] = B;
@@ -32,7 +62,10 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
     digest[3] = D;
     digest[4] = E;
     return digest;
-}
+    }
+    */
+    
+
 
 
 int digest_equal(struct Digest digest1, struct Digest digest2) {
