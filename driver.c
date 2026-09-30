@@ -13,6 +13,12 @@ int main(void) {
 	head = add(head, "Nick");
 
 	printLog(head);
+	verify(head); // Baseline
+	
+	//Tests 4 and 5: Link connection with previous node, and moddified entry
+	strcpy(head->next->Username, "Timothy");
+	verify(head); // Should fail
+
 
 
 	/* 
